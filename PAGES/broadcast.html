@@ -42,9 +42,21 @@
         <div class="heading">
             <h1>Broadcast</h1>
         </div>
-    
-
-
+    </div>
+        <div class="container">
+            <div class="messages">
+                <!-- Messages will be displayed here -->
+            </div>
+            <h1>Select Recipient</h1>
+            <select id="recipientSelect" >
+                <option value="friend1">Everyone</option>
+                <option value="friend2">lecturers</option>
+                <option value="friend3">Supervisors</option>
+            </select>
+            <input type="text" id="messageInput" placeholder="Type your message...">
+            <button onclick="sendMessageToAllUsers()">Send</button>
+        </div>
+        
     <div class="footer">
         <div class="text">
         <a href="www.heemah-tech.com"><p class="footer-text">  <span id="copy">&copy; </span>    Heemah Tech</p></a>
@@ -53,3 +65,58 @@
          <p class="button"><a href="/PAGES/login.html">Sign out</a><img src="/images/icons8-forward-26.png" alt=""  width="20" height="20"></p>
     </div>
     </div>
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getDatabase, set, ref,update} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+    
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+      
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+          apiKey: "AIzaSyAdWRvMf-FTjVxfS2wFabu7vt5Ud661saU",
+          authDomain: "e-logbook-65eae.firebaseapp.com",
+          databaseURL: "https://e-logbook-65eae-default-rtdb.firebaseio.com",
+          projectId: "e-logbook-65eae",
+          storageBucket: "e-logbook-65eae.appspot.com",
+          messagingSenderId: "52813059107",
+          appId: "1:52813059107:web:a8b406300e3b019b000d96"
+        };
+      
+    // Initialize Firebase
+
+firebase.initializeApp(firebaseConfig);
+
+var database = firebase.database();
+
+function sendMessageToAllUsers() {
+    var messageInput = document.getElementById('messageInput');
+    var message = messageInput.value;
+    var recipient = document.getElementById('recipientSelect').value;
+
+    if (message.trim() !== '') {
+        database.ref('users').once('value', function(snapshot) {
+            snapshot.forEach(function(childSnapshot) {
+                var recipient = childSnapshot.key;
+                var messageData = {
+                    sender: "school managemant", // Replace with sender's name
+                    recipient: recipient,
+                    message: message
+                };
+                database.ref('messages').push(messageData);
+            });
+        });
+        messageInput.value = '';
+        alert('Message sent to all users');
+        location.reload(); // Refresh the page
+    }
+    alert('Message sent to all users');
+        location.reload(); // Refresh the page
+}
+
+    
+   
+    </script>
+</body>
+</html>
