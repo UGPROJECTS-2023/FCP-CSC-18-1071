@@ -17,4 +17,4 @@ Upon the completion of this project, I suggest incorporating some additional fea
 4. Start the server: `npm start`
 
 ## Usage
-After starting the server, open your web browser and navigate to `http://localhost:3000` to start using the Electronic Logbook.
+After starting the server, open your web browser and navigate to https://fud-e-logbook.netlify.app/ to start using the Electronic Logbook.
